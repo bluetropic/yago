@@ -53,7 +53,7 @@ public class DataWriter {
 			
 			for (Map.Entry<String, Entity> entities : entityTable.entrySet()) {
 				Entity e = entities.getValue();
-				fw.write(e.getAttrString(maxClum, typeDic));
+				bufw.write(e.getAttrString(maxClum, typeDic));
 				bufw.newLine();
 			}
 			bufw.close();

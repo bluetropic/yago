@@ -32,7 +32,8 @@ public class Type {
 	public String parsePath(String p, Map<String, String> typeSet) {
 		String path = "";
 		String typeName = "";
-		String[] typeIdSet = p.split("/");
+		String sp=p.substring(1);
+		String[] typeIdSet = sp.split("/");
 		for (String s : typeIdSet) {
 			if (s != null) {
 				typeName = typeSet.get(s);

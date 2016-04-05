@@ -16,7 +16,7 @@ public class DataLoader {
 		try {
 			FileReader fr = new FileReader(headFile);
 			BufferedReader reader = new BufferedReader(fr);
-			String line = reader.readLine();
+			String line;
 
 			while ((line = reader.readLine()) != null) {
 				head = head + "\t" + n + ":" + line;

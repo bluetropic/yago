@@ -21,7 +21,7 @@ public class test {
 		//String revTypeFile="out/raw-typeCategory.txt";
 		//String carSetFile="out/carSetFile.txt";
 		//String carTaxoFile="out/carTypeFile.txt";
-		//String VehiTaxoFile="out/VehicalType.txt";
+		String vehiTaxoFile="out/VehicalTypeTree.txt";
 		String tableFile="out/entityTable-long.txt";
 		
 		Yago yago = new Yago(carId,vehicleId);
@@ -29,8 +29,8 @@ public class test {
 		yago.genTable(taxonomyFile,typeOfFile, typeCategory);
 		//yago.writeTable();
 		//yago.writeTable(tableFile, headFile);
-		yago.writeTableX(taxonomyFile,tableFile,headFile);
-	
+		yago.writeTableX(taxonomyFile,typeOfFile,tableFile,headFile);
+		yago.writeTaxonomy(vehiTaxoFile);
 		System.out.println("-----ok-----");
 	
 	}

@@ -70,14 +70,17 @@ public class Yago {
 		System.out.println("We have found "+entityTable.size()+" cars.");
 		dw.writeEntityTable(entityTable, headFile,tableFile);
 	}
-	public void writeTableX(String taxonomyFile,String tableFile,String headFile){
+	public void writeTableX(String taxonomyFile,String typeOfFile,String tableFile,String headFile){
 		dl.getTypeIdSet(vehicleTaxonomy, vehicleTypeSet);
 		dl.getCatTypeDictionary(taxonomyFile, vehicleTypeSet, typeDictionary);
-		//dl.getCatTypeDictionary(typeOfFile, categoryTypeSet, typeDictionary);
+		dl.getCatTypeDictionary(typeOfFile, categoryTypeSet, typeDictionary);
 		System.out.println("We have found "+entityTable.size()+" cars.");
 		dw.writeEntityTableX(entityTable, headFile, tableFile,typeDictionary);
+		
 	}
-	
+	public void writeTaxonomy(String treeFile){
+		dw.writeClassTree(vehicleTaxonomy, typeDictionary,treeFile,vehicleNode, 0);
+	}
 	public Yago(String carNode, String vehicleNode) {
 		super();
 		this.carNode = carNode;

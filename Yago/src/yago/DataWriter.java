@@ -11,25 +11,25 @@ import java.util.Set;
 public class DataWriter {
 	String nextLine = System.getProperty("line.separator");
 	int maxClum = 13;
-	DataLoader dl=new DataLoader();
-	
+	DataLoader dl = new DataLoader();
+
 	public void printTable(Map<String, Entity> entityTable) {
-			for (Map.Entry<String, Entity> entities : entityTable.entrySet()) {
-				Entity e = entities.getValue();
-				System.out.println(e.getAttrString(maxClum));
-			}
+		for (Map.Entry<String, Entity> entities : entityTable.entrySet()) {
+			Entity e = entities.getValue();
+			System.out.println(e.getAttrString(maxClum));
+		}
 
 	}
-	public void writeEntityTable(Map<String, Entity> entityTable, String headFile,String tableFile) {
-		
-		
+
+	public void writeEntityTable(Map<String, Entity> entityTable, String headFile, String tableFile) {
+
 		try {
 			FileWriter fw = new FileWriter(tableFile, true);
 			BufferedWriter bufw = new BufferedWriter(fw);
-			String tableHead=dl.loadTableHead(headFile);
+			String tableHead = dl.loadTableHead(headFile);
 			bufw.write(tableHead);
 			bufw.newLine();
-			
+
 			for (Map.Entry<String, Entity> entities : entityTable.entrySet()) {
 				Entity e = entities.getValue();
 				bufw.write(e.getAttrString(maxClum));
@@ -42,15 +42,17 @@ public class DataWriter {
 			e.printStackTrace();
 		}
 	}
-	public void writeEntityTableX(Map<String, Entity> entityTable, String headFile,String tableFile,Map<String, String> typeDic) {
+
+	public void writeEntityTableX(Map<String, Entity> entityTable, String headFile, String tableFile,
+			Map<String, String> typeDic) {
 
 		try {
 			FileWriter fw = new FileWriter(tableFile, true);
 			BufferedWriter bufw = new BufferedWriter(fw);
-			String tableHead=dl.loadTableHead(headFile);
+			String tableHead = dl.loadTableHead(headFile);
 			bufw.write(tableHead);
 			bufw.newLine();
-			
+
 			for (Map.Entry<String, Entity> entities : entityTable.entrySet()) {
 				Entity e = entities.getValue();
 				bufw.write(e.getAttrString(maxClum, typeDic));
@@ -157,13 +159,42 @@ public class DataWriter {
 		}
 	}
 
-	public void printStartNode(String classTreeFile, String startNode, int level) {
+	public void writeClassTree(Map<String, ArrayList<String>> smallTaxonomy, Map<String, String> typeDic,
+			String classTreeFile, String startNode, int level) {
+		printStartNode(classTreeFile, typeDic, startNode, level);
+		if (smallTaxonomy.containsKey(startNode)) {
+			ArrayList<String> adjList = smallTaxonomy.get(startNode);
+			for (String s : adjList) {
+				writeClassTree(smallTaxonomy, typeDic, classTreeFile, s, level + 1);
+			}
+		}
+	}
+
+	private void printStartNode(String classTreeFile, String startNode, int level) {
 		String prefix = "";
 		String line = "";
 		for (int i = 0; i < level; i++) {
 			prefix = prefix + "\t\t";
 		}
+
 		line = prefix + startNode + nextLine;
+		try {
+			// ��һ��д�ļ��������캯���еĵڶ�������true��ʾ��׷����ʽд�ļ�
+			FileWriter writer = new FileWriter(classTreeFile, true);
+			writer.write(line);
+			writer.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	private void printStartNode(String classTreeFile, Map<String, String> typeDic, String startNode, int level) {
+		String prefix = "";
+		String line = "";
+		for (int i = 0; i < level; i++) {
+			prefix = prefix + "\t\t";
+		}
+		line = prefix + typeDic.get(startNode) + nextLine;
 		try {
 			// ��һ��д�ļ��������캯���еĵڶ�������true��ʾ��׷����ʽд�ļ�
 			FileWriter writer = new FileWriter(classTreeFile, true);
